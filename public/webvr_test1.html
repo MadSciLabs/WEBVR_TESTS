@@ -38,8 +38,8 @@
 
 			var camera, scene, renderer;
 			var effect, controls;
-			var alex;
-			
+			var alex, brice, mark, salvador;
+
 			init();
 			animate();
 
@@ -97,7 +97,7 @@
 				light.shadow.camera.zoom = 4;
 				scene.add( light );
 				*/
-			
+
 
 				//
 
@@ -211,7 +211,6 @@
 				});
 				*/
 
-
 				alex = new THREE.Mesh(geometry, material);
 
 				alex.position.x = -100.4;
@@ -223,6 +222,51 @@
 				alex.castShadow = true;
 				alex.receiveShadow = true;
 				scene.add(alex);
+			});
+
+			loader.load('/models/ply/brice_rogers.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				brice = new THREE.Mesh(geometry, material);
+
+				brice.position.x = -300;
+				brice.position.y = -200.4;
+				brice.position.z = -100.3;
+
+				brice.rotation.x = -Math.PI / 2;
+				brice.scale.multiplyScalar(0.1);
+				brice.castShadow = true;
+				brice.receiveShadow = true;
+				scene.add(brice);
+			});
+
+			loader.load('/models/ply/mark_brice.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				mark = new THREE.Mesh(geometry, material);
+
+				mark.position.x = -300;
+				mark.position.y = -300.4;
+				mark.position.z = -100.3;
+
+				mark.rotation.x = -Math.PI / 2;
+				mark.scale.multiplyScalar(0.1);
+				mark.castShadow = true;
+				mark.receiveShadow = true;
+				scene.add(mark);
+			});
+
+			loader.load('/models/ply/salvador_velez.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				salvador = new THREE.Mesh(geometry, material);
+
+				salvador.position.x = -300;
+				salvador.position.y = -300.4;
+				salvador.position.z = -100.3;
+
+				salvador.rotation.x = -Math.PI / 2;
+				salvador.scale.multiplyScalar(0.1);
+				salvador.castShadow = true;
+				salvador.receiveShadow = true;
+				scene.add(salvador);
 			});
 
 				//RENDERER
@@ -274,6 +318,15 @@
 
 			alex.rotation.x += 0.02;
 			alex.rotation.y += 0.03;
+
+			brice.rotation.x += 0.01;
+			brice.rotation.y += 0.02;
+
+			mark.rotation.x += 0.03;
+			mark.rotation.y += 0.02;
+
+			salvador.rotation.x += 0.03;
+			salvador.rotation.y += 0.02;
 
 				controls.update();
 
