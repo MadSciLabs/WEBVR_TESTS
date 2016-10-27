@@ -24,10 +24,12 @@
 		<script src="js/effects/VREffect.js"></script>
 		<script src="js/vr/WebVR.js"></script>
 
+			<script src="/js/loaders/PLYLoader.js"></script>
+
 		<script>
 
 			if ( WEBVR.isLatestAvailable() === false ) {
-
+-
 				document.body.appendChild( WEBVR.getMessage() );
 
 			}
@@ -36,6 +38,7 @@
 
 			var camera, scene, renderer;
 			var effect, controls;
+			var alex, brice, mark, salvador;
 
 			init();
 			animate();
@@ -44,44 +47,48 @@
 
 				scene = new THREE.Scene();
 
-				var ambient = new THREE.AmbientLight( 0x444444 );
-				scene.add( ambient );
+			var textureCube = new THREE.CubeTextureLoader()
+				.setPath('textures/cube/Bridge2/')
+				.load(['posx.jpg', 'negx.jpg', 'posy.jpg', 'negy.jpg', 'posz.jpg', 'negz.jpg']);
+			scene = new THREE.Scene();
+			scene.background = textureCube;
+
+				//var ambient = new THREE.AmbientLight( 0x444444 );
+				//scene.add( ambient );
 
 				var dummy = new THREE.Camera();
 				dummy.position.set( 2, 1, 2 );
 				dummy.lookAt( scene.position );
 				scene.add( dummy );
 
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 2000); //0.1, 10 );
-				camera.position.z = 250;
+				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000); //0.1, 10 );
+				camera.position.z = 350;
+				camera.position.x = 250;
+				camera.position.y = 250;
 
 				dummy.add( camera );
 
-/*
-				var geometry = new THREE.TorusKnotGeometry( 0.4, 0.15, 150, 20 );;
-				var material = new THREE.MeshStandardMaterial( { roughness: 0.01, metalness: 0.2 } );
-				var mesh = new THREE.Mesh( geometry, material );
-				mesh.position.y = 0.75;
-				mesh.castShadow = true;
-				mesh.receiveShadow = true;
-				scene.add( mesh );
-*/
+
 
 /*
-				var geometry = new THREE.BoxGeometry( 3, 0.1, 3 );
-				var material = new THREE.MeshStandardMaterial( { roughness: 1.0, metalness: 0.0 } );
-				var mesh = new THREE.Mesh( geometry, material );
-				mesh.position.y = - 0.1;
-				mesh.castShadow = true;
-				mesh.receiveShadow = true;
-				scene.add( mesh );
-*/
-
 				var light = new THREE.DirectionalLight( 0xffeedd );
 				light.position.set( 0,0,1 );
 				light.castShadow = true;
 				//light.shadow.camera.zoom = 4;
 				scene.add( light );
+*/
+			// LIGHTS
+			var ambient = new THREE.AmbientLight(0x050505);
+			scene.add(ambient);
+			directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+			directionalLight.position.set(2, 1.2, 10).normalize();
+			scene.add(directionalLight);
+			directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+			directionalLight.position.set(-2, 1.2, -10).normalize();
+			scene.add(directionalLight);
+			pointLight = new THREE.PointLight(0xffaa00, 2);
+			pointLight.position.set(2000, 1200, 10000);
+			scene.add(pointLight);
 
 				/*
 				var light = new THREE.DirectionalLight( 0x444444 );
@@ -90,11 +97,20 @@
 				light.shadow.camera.zoom = 4;
 				scene.add( light );
 				*/
-			
+
 
 				//
 
 				//3D MODEL
+				/*
+				var textureLoader = new THREE.TextureLoader();
+
+		textureLoader.load('textures/2294472375_24a3b8ef46_o.jpg', function(texture) {
+			texture.mapping = THREE.UVMapping;
+			init(texture);
+			animate();
+		});
+		*/
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;
@@ -117,13 +133,141 @@
 					objLoader.setPath( 'obj/male02/' );
 					objLoader.load( 'male02.obj', function ( object ) {
 
-						object.position.y = -90;
+						//object.position.y = -90;
+						object.position.z = -10;
+						object.scale.x = .2;
+						object.scale.y = .2;
+						object.scale.z = .2;
+
 						scene.add( object );
 
 					}, onProgress, onError );
 
 				});
 
+				//MATERIALS
+			var mlib = {
+				"Carmine": new THREE.MeshPhongMaterial({
+					color: 0x770000,
+					specular: 0xffaaaa,
+					envMap: textureCube,
+					combine: THREE.MultiplyOperation
+				}),
+				"Gold": new THREE.MeshPhongMaterial({
+					color: 0xaa9944,
+					specular: 0xbbaa99,
+					shininess: 50,
+					envMap: textureCube,
+					combine: THREE.MultiplyOperation
+				}),
+				"Bronze": new THREE.MeshPhongMaterial({
+					color: 0x150505,
+					specular: 0xee6600,
+					shininess: 10,
+					envMap: textureCube,
+					combine: THREE.MixOperation,
+					reflectivity: 0.25
+				}),
+				"Chrome": new THREE.MeshPhongMaterial({
+					color: 0xffffff,
+					specular: 0xffffff,
+				envMap: textureCube,
+					combine: THREE.MultiplyOperation
+				}),
+				"Silver": new THREE.MeshPhongMaterial({
+					envMap: textureCube
+				})
+			};
+
+			material = mlib["Chrome"];
+
+/*
+			cube = new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), material);
+			cube.scale.multiplyScalar(.2);
+			cube.position.x = 10;
+
+			scene.add(cube);
+
+			torus = new THREE.Mesh(new THREE.TorusKnotGeometry(10, 5, 100, 25), mlib["Gold"]);
+			torus.scale.multiplyScalar(.2);
+			torus.position.x = 10;
+
+			scene.add(torus);
+*/
+			var loader = new THREE.PLYLoader();
+			loader.load('/models/ply/Alex_Wood.ply', function(geometry) {
+				geometry.computeVertexNormals();
+
+				//vertex colors
+				/*
+				material = new THREE.MeshStandardMaterial({
+				color: 0x0055ff,
+				vertexColors: THREE.VertexColors,
+				// shading: THREE.FlatShading
+				color: 0xffffff,
+				specular: 0x111111,
+				shininess: 100,
+				vertexColors: THREE.VertexColors
+				});
+				*/
+
+				alex = new THREE.Mesh(geometry, material);
+
+				alex.position.x = -100.4;
+				alex.position.y = -200.4;
+				alex.position.z = -100.3;
+
+				alex.rotation.x = -Math.PI / 2;
+				alex.scale.multiplyScalar(0.1);
+				alex.castShadow = true;
+				alex.receiveShadow = true;
+				scene.add(alex);
+			});
+
+			loader.load('/models/ply/brice_rogers.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				brice = new THREE.Mesh(geometry, material);
+
+				brice.position.x = -300;
+				brice.position.y = -200.4;
+				brice.position.z = -100.3;
+
+				brice.rotation.x = -Math.PI / 2;
+				brice.scale.multiplyScalar(0.1);
+				brice.castShadow = true;
+				brice.receiveShadow = true;
+				scene.add(brice);
+			});
+
+			loader.load('/models/ply/mark_brice.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				mark = new THREE.Mesh(geometry, material);
+
+				mark.position.x = -300;
+				mark.position.y = -300.4;
+				mark.position.z = -100.3;
+
+				mark.rotation.x = -Math.PI / 2;
+				mark.scale.multiplyScalar(0.1);
+				mark.castShadow = true;
+				mark.receiveShadow = true;
+				scene.add(mark);
+			});
+
+			loader.load('/models/ply/salvador_velez.ply', function(geometry) {
+				geometry.computeVertexNormals();
+				salvador = new THREE.Mesh(geometry, material);
+
+				salvador.position.x = -300;
+				salvador.position.y = -300.4;
+				salvador.position.z = -100.3;
+
+				salvador.rotation.x = -Math.PI / 2;
+				salvador.scale.multiplyScalar(0.1);
+				salvador.castShadow = true;
+				salvador.receiveShadow = true;
+				scene.add(salvador);
+			});
 
 				//RENDERER
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -169,8 +313,20 @@
 
 				var time = performance.now() * 0.0002;
 				var mesh = scene.children[ 1 ];
-				mesh.rotation.x = time * 2;
-				mesh.rotation.y = time * 5;
+				//mesh.rotation.x = time * 2;
+				//mesh.rotation.y = time * 5;
+
+			alex.rotation.x += 0.02;
+			alex.rotation.y += 0.03;
+
+			brice.rotation.x += 0.01;
+			brice.rotation.y += 0.02;
+
+			mark.rotation.x += 0.03;
+			mark.rotation.y += 0.02;
+
+			salvador.rotation.x += 0.03;
+			salvador.rotation.y += 0.02;
 
 				controls.update();
 
