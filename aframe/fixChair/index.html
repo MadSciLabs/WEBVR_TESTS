@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tracked Controls</title>
+    <meta name="description" content="Tracked Controls – A-Frame">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+    <script src="components/aabb-collider.js"></script>
+    <script src="components/grab.js"></script>
+    <script src="components/ground.js"></script>
+    <script src="components/skyGradient.js"></script>
+  </head>
+    
+  <body>
+    <a-scene gridhelper fog="color: #bc483e; near: 0; far: 65;">
+      <a-assets>
+        <a-asset-item id="chair-obj" src="image/model/chair_inches.obj"></a-asset-item>//import the chair model
+        <a-asset-item id="man-mtl" src="image/model/male02.mtl"></a-asset-item>//import the man mtl materals
+      </a-assets>
+      <!-- Hands -->
+      <a-entity vive-controls="hand: left"></a-entity>
+        <a-entity vive-controls="hand: right">
+            <a-entity id="obj-object"
+                        obj-model="obj: #chair-obj" position="-0.3 -0.15 -0.25" scale=".03 .03 .03" rotation="15 5 320"></a-entity>
+        </a-entity>
+
+      <!-- A-Frame cubes -->
+      <a-entity position="0 0 0">
+      <!--  <a-entity class="cube" mixin="cube" position="0 1 -2"></a-entity>-->       
+      <!-- Environment -->
+        <a-entity id="sky"
+                  geometry="primitive: sphere; radius: 65;"
+                  material="shader: skyGradient; colorTop: #353449; colorBottom: #BC483E; side: back"></a-entity>
+         <a-entity ground></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
+         <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>
+      </a-entity>
+    </a-scene>
+      
+
+
+<!--try to write a function that when I press the key, it will change the position of the object      -->
+    <script type="text/javascript" src="components/position-fix.js"></script>      
+  </body>
+</html>  
