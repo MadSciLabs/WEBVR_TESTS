@@ -19,8 +19,13 @@
         <a-asset-item id="man-mtl" src="image/model/male02.mtl"></a-asset-item>//import the man mtl materals
       </a-assets>
       <!-- Hands -->
-      <a-entity vive-controls="hand: left"></a-entity>
-        <a-entity vive-controls="hand: right">
+      <a-entity vive-controls="hand: left">
+                    <a-entity id="hand-object"
+                        obj-model="obj: #hand-obj" position="-0.3 -0.15 -0.25" scale=".03 .03 .03" rotation="15 5 320"></a-entity>
+
+      </a-entity>
+  
+      <a-entity vive-controls="hand: right">
             <a-entity id="obj-object"
                         obj-model="obj: #chair-obj" position="-0.3 -0.15 -0.25" scale=".03 .03 .03" rotation="15 5 320"></a-entity>
         </a-entity>
