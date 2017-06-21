@@ -21,13 +21,13 @@
         <a-asset-item id="office-obj" src="image/model/office_chair.obj"></a-asset-item>
         <a-asset-item id="office-mtl" src="image/model/office_chair.mtl"></a-asset-item>
 
-        <a-asset-item id="adam-obj" src="image/model/adam_hole_reduced.obj"></a-asset-item>
-        <a-asset-item id="adam-mtl" src="image/model/adam_hole_reduced.mtl"></a-asset-item>
+        <a-asset-item id="adam-obj" src="image/model/adam_hole_reduced2.obj"></a-asset-item>
+        <a-asset-item id="adam-mtl" src="image/model/adam_hole_reduced2.mtl"></a-asset-item>
 
       </a-assets>
       <!-- Hands -->
   
-      <a-entity vive-controls="hand: right" id="obj-ctrl" position="0 0 -2">
+      <a-entity vive-controls="hand: right" id="obj-ctrl" position="0 0 0">
 
             <a-entity hand-controls="left" position="0 0 0" scale="1 1 1"></a-entity>
 
@@ -35,7 +35,7 @@
                         obj-model="obj: #office-obj; mtl: #office-mtl" position=".25 -.7 0" scale="1 1 1" rotation="-90 0 0">
                           
                <a-entity id="obj-set-adam"
-                        obj-model="obj: #adam-obj; mtl: #adam-mtl" position="0 -.1 .75" scale="1 1 1" rotation="77 0 0">
+                        obj-model="obj: #adam-obj; mtl: #adam-mtl" position="0 -.1 .75" scale="1 1 1" rotation="67 0 0">
                </a-entity>
 
             </a-entity>
@@ -48,8 +48,8 @@
         <a-entity id="sky"
                   geometry="primitive: sphere; radius: 65;"
                   material="shader: skyGradient; colorTop: #f4f4f4; colorBottom: #84b1ff; side: back"></a-entity>
-         <a-entity ground></a-entity>
-         <a-entity light="type: point; color: #f4f4f4; intensity: 0.3; distance: 0" position="8 10 18"></a-entity>
+         
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.1; distance: 0" position="8 10 18"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
          <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>
       </a-entity>
