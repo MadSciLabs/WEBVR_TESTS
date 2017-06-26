@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Lab - WebVR Bar</title>
+    <meta name="description" content="Tracked Controls – A-Frame">
+
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+    <script src="aframe-extras.js"></script>
+
+    <script src="components/aabb-collider.js"></script>
+    <!--script src="components/grab.js"></script-->
+    <script src="components/ground.js"></script>
+    <script src="components/skyGradient.js"></script>
+  </head>
+    
+  <body>
+    <a-scene gridhelper fog="color: #bc483e; near: 0; far: 65;">
+      <a-assets>
+        <a-asset-item id="chair-obj" src="image/model/new_chair.obj"></a-asset-item>//import the chair model
+        <a-asset-item id="chair-mtl" src="image/model/new_chair.mtl"></a-asset-item>
+
+        <a-asset-item id="hand-obj" src="image/model/righthand_clear.obj"></a-asset-item>
+        <a-asset-item id="hand-mtl" src="image/model/righthand_clear.mtl"></a-asset-item-->
+
+        <a-asset-item id="bottle-obj" src="image/model/bottle.obj"></a-asset-item>
+        <a-asset-item id="bottle-mtl" src="image/model/bottle.mtl"></a-asset-item>
+
+        <a-asset-item id="bar-obj" src="image/model/overlook.obj"></a-asset-item>
+        <a-asset-item id="bar-mtl" src="image/model/overlook.mtl"></a-asset-item>
+
+        <a-asset-item id="bartender" src="image/model/json/miximo_adam_bartender3.json"></a-asset-item>
+
+      </a-assets>
+
+
+      <!-- Hands -->
+      <a-entity vive-controls="hand: left">
+    
+            <a-entity id="obj-bottle"
+                        obj-model="obj: #bottle-obj; mtl: #bottle-mtl" position="0 0 0" rotation="-90 0 0">
+            </a-entity>
+      </a-entity>
+  
+      <a-entity vive-controls="hand: right">
+           <a-entity id="obj-hand"
+                        obj-model="obj: #hand-obj; mtl: #hand-mtl;" position="0 1 0" scale=".045 .045 .045" rotation="0 0 180">
+                        </a-entity>
+      </a-entity>
+
+      <a-entity id="bar-object"
+                        obj-model="obj: #bar-obj; mtl: #bar-mtl" position="-2.3 1 -1.5" scale="1 1 1" rotation="-90 0 0"></a-entity>  
+
+      <a-entity id="obj-object"
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+      </a-entity>  
+
+      <a-entity id="obj-object"
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-1.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+      </a-entity>  
+
+            <a-entity id="obj-object"
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position=".5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+      </a-entity>  
+
+            <a-entity id="obj-object"
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="1.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+      </a-entity>  
+
+      <a-entity scale="1 1 1"
+                position="0 .1 -2.20"
+                rotation="0 0 0"
+                animation-mixer
+                json-model="src: #bartender">
+      </a-entity>
+
+      <!-- A-Frame cubes -->
+      <a-entity position="0 0 0">
+      <!--  <a-entity class="cube" mixin="cube" position="0 1 -2"></a-entity>-->       
+      <!-- Environment -->
+        <a-entity id="sky"
+                  geometry="primitive: sphere; radius: 65;"
+                  material="shader: skyGradient; colorTop: #d8e7ff; colorBottom: #ffedd8; side: back"></a-entity>
+         <a-entity ground></a-entity>
+
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
+
+         <a-entity light="type: ambient; color: #f4f4f4; intensity: .8;" position="0 5 -1"></a-entity>
+         <!--a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity-->
+
+      </a-entity>
+    </a-scene>
+      
+
+
+<!--try to write a function that when I press the key, it will change the position of the object      -->
+    <script language="javascript">
+
+      var _moveType = 1;
+
+      var _objModel = document.querySelector('#obj-bottle'); 
+      window.addEventListener("keypress", moveObject);
+        
+      function moveObject(event) {
+
+        if (event.keyCode == 122) {
+
+          _moveType *= -1;
+
+          if (_moveType == -1) {
+            _objModel = document.querySelector('#obj-hand'); 
+          } else {
+            _objModel = document.querySelector('#obj-bottle'); 
+          }
+
+        }
+
+
+       var _x = _objModel.getAttribute('position').x;
+       var _y = _objModel.getAttribute('position').y;
+       var _z = _objModel.getAttribute('position').z;
+       var _u = _objModel.getAttribute('rotation').x;
+       var _v = _objModel.getAttribute('rotation').y;  
+       var _w = _objModel.getAttribute('rotation').z;
+
+       //console.log(_u, _v, _w);
+          if(event.keyCode==49){ _x+=0.02;} if(event.keyCode==50){ _x-=0.02;}
+          if(event.keyCode==51){ _y+=0.02;} if(event.keyCode==52){ _y-=0.02;}
+          if(event.keyCode==53){ _z+=0.02;} if(event.keyCode==54){ _z-=0.02;}
+
+          if(event.keyCode==55){ _u+=2;} if(event.keyCode==56){ _u-=2;}
+          if(event.keyCode==57){ _v+=2; } if(event.keyCode==48){ _v-=2; }
+          if(event.keyCode==45){ _w+=2; } if(event.keyCode==61){ _w-=2; }
+
+          
+          console.log("Chair: " + _x + "," + _y + "," +_z + "-" + _u + "," + _v + "," + _w);
+          
+        _objModel.setAttribute('position', `${_x} ${_y} ${_z}`);
+        _objModel.setAttribute('rotation', `${_u} ${_v} ${_w}`);
+      }                           
+
+    </script>
+     
+  </body>
+</html>  

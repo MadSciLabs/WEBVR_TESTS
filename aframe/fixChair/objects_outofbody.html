@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tracked Controls</title>
+    <meta name="description" content="Tracked Controls – A-Frame">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+    <script src="components/aabb-collider.js"></script>
+    <script src="components/grab.js"></script>
+    <script src="components/ground.js"></script>
+    <script src="components/skyGradient.js"></script>
+  </head>
+    
+  <body>
+    <a-scene gridhelper fog="color: #bc483e; near: 0; far: 65;">
+      <a-assets>
+        <a-asset-item id="chair-obj" src="image/model/chair_inches.obj"></a-asset-item>//import the chair model
+        <a-asset-item id="man-mtl" src="image/model/male02.mtl"></a-asset-item>//import the man mtl materals
+
+        <a-asset-item id="office-obj" src="image/model/office_chair.obj"></a-asset-item>
+        <a-asset-item id="office-mtl" src="image/model/office_chair.mtl"></a-asset-item>
+
+        <a-asset-item id="adam-obj" src="image/model/adam_hole_reduced2.obj"></a-asset-item>
+        <a-asset-item id="adam-mtl" src="image/model/adam_hole_reduced2.mtl"></a-asset-item>
+
+      </a-assets>
+      <!-- Hands -->
+  
+      <a-entity vive-controls="hand: right" id="obj-ctrl" position="0 0 0">
+
+
+            <a-entity id="obj-set"
+                        obj-model="obj: #office-obj; mtl: #office-mtl" position=".25 -.7 0" scale="1 1 1" rotation="-90 0 0">
+                          
+               <a-entity id="obj-set-adam"
+                        obj-model="obj: #adam-obj; mtl: #adam-mtl" position="0 -.1 .75" scale="1 1 1" rotation="67 0 0">
+               </a-entity>
+
+            </a-entity>
+        </a-entity>
+
+      <!-- A-Frame cubes -->
+      <a-entity position="0 0 0">
+      <!--  <a-entity class="cube" mixin="cube" position="0 1 -2"></a-entity>-->       
+      <!-- Environment -->
+        <a-entity id="sky"
+                  geometry="primitive: sphere; radius: 65;"
+                  material="shader: skyGradient; colorTop: #f4f4f4; colorBottom: #84b1ff; side: back"></a-entity>
+         
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.1; distance: 0" position="8 10 18"></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
+         <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>
+      </a-entity>
+    </a-scene>
+      
+
+
+<!--try to write a function that when I press the key, it will change the position of the object      -->
+
+        <script language="javascript">
+
+      var _moveType = 1;
+
+      var _objModel = document.querySelector('#obj-ctrl'); 
+      window.addEventListener("keypress", moveObject);
+        
+      function moveObject(event) {
+
+        if (event.keyCode == 97) {
+          _moveType *= -1;
+        }
+
+
+       var _x = _objModel.getAttribute('position').x;
+       var _y = _objModel.getAttribute('position').y;
+       var _z = _objModel.getAttribute('position').z;
+       var _u = _objModel.getAttribute('rotation').x;
+       var _v = _objModel.getAttribute('rotation').y;  
+       var _w = _objModel.getAttribute('rotation').z;
+
+       //console.log(_u, _v, _w);
+          if(event.keyCode==49){ _x+=0.02;} if(event.keyCode==50){ _x-=0.02;}
+          if(event.keyCode==51){ _y+=0.02;} if(event.keyCode==52){ _y-=0.02;}
+          if(event.keyCode==53){ _z+=0.02;} if(event.keyCode==54){ _z-=0.02;}
+
+          if(event.keyCode==55){ _u+=2;} if(event.keyCode==56){ _u-=2;}
+          if(event.keyCode==57){ _v+=2; } if(event.keyCode==48){ _v-=2; }
+          if(event.keyCode==45){ _w+=2; } if(event.keyCode==61){ _w-=2; }
+
+          
+          console.log("Chair: " + _x + "," + _y + "," +_z + "-" + _u + "," + _v + "," + _w);
+          
+        _objModel.setAttribute('position', `${_x} ${_y} ${_z}`);
+        _objModel.setAttribute('rotation', `${_u} ${_v} ${_w}`);
+      }                           
+
+    </script>
+
+  </body>
+</html>  
