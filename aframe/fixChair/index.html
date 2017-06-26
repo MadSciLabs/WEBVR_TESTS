@@ -15,20 +15,20 @@
   <body>
     <a-scene gridhelper fog="color: #bc483e; near: 0; far: 65;">
       <a-assets>
-        <a-asset-item id="chair-obj" src="image/model/chair_inches.obj"></a-asset-item>//import the chair model
-        <a-asset-item id="man-mtl" src="image/model/male02.mtl"></a-asset-item>//import the man mtl materals
+        <a-asset-item id="chair-obj" src="image/model/chair.obj"></a-asset-item>//import the chair model
+        <a-asset-item id="hand-obj" src="image/model/righthand.obj"></a-asset-item>
+        <a-asset-item id="hand-mtl" src="image/model/righthand.mtl"></a-asset-item>
       </a-assets>
       <!-- Hands -->
       <a-entity vive-controls="hand: left">
-                    <a-entity id="hand-object"
-                        obj-model="obj: #hand-obj" position="-0.3 -0.15 -0.25" scale=".03 .03 .03" rotation="15 5 320"></a-entity>
-
+          <a-entity id="obj-object"
+                        obj-model="obj: #chair-obj" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>      
       </a-entity>
   
       <a-entity vive-controls="hand: right">
-            <a-entity id="obj-object"
-                        obj-model="obj: #chair-obj" position="-0.3 -0.15 -0.25" scale=".03 .03 .03" rotation="15 5 320"></a-entity>
-        </a-entity>
+           <a-entity id="obj-hand"
+                        obj-model="obj: #hand-obj" position="0 0 0" scale=".05 .05 .05" rotation="0 0 180"></a-entity>
+      </a-entity>
 
       <!-- A-Frame cubes -->
       <a-entity position="0 0 0">
@@ -36,8 +36,8 @@
       <!-- Environment -->
         <a-entity id="sky"
                   geometry="primitive: sphere; radius: 65;"
-                  material="shader: skyGradient; colorTop: #353449; colorBottom: #BC483E; side: back"></a-entity>
-         <a-entity ground></a-entity>
+                  material="shader: skyGradient; colorTop: #d8e7ff; colorBottom: #ffedd8; side: back"></a-entity>
+<!--         <a-entity ground></a-entity>-->
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>
          <a-entity light="type: ambient; color: #f4f4f4; intensity: 0.4;" position="-8 10 -18"></a-entity>

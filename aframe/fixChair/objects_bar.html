@@ -5,7 +5,7 @@
     <title>Lab - WebVR Bar</title>
     <meta name="description" content="Tracked Controls – A-Frame">
 
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="aframe.min.js"></script>
     <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
     <script src="aframe-extras.js"></script>
 
@@ -16,7 +16,7 @@
   </head>
     
   <body>
-    <a-scene gridhelper fog="color: #bc483e; near: 0; far: 65;">
+    <a-scene>     //gridhelper fog="color: #bc483e; near: 0; far: 65;"
       <a-assets>
         <a-asset-item id="chair-obj" src="image/model/new_chair.obj"></a-asset-item>//import the chair model
         <a-asset-item id="chair-mtl" src="image/model/new_chair.mtl"></a-asset-item>
@@ -39,37 +39,37 @@
       <a-entity vive-controls="hand: left">
     
             <a-entity id="obj-bottle"
-                        obj-model="obj: #bottle-obj; mtl: #bottle-mtl" position="0 0 0" rotation="-90 0 0">
+                        obj-model="obj: #bottle-obj; mtl: #bottle-mtl" position="0 0 .28" scale="2.5 2.5 2.5" rotation="-180 0 0">
             </a-entity>
       </a-entity>
   
       <a-entity vive-controls="hand: right">
            <a-entity id="obj-hand"
-                        obj-model="obj: #hand-obj; mtl: #hand-mtl;" position="0 1 0" scale=".045 .045 .045" rotation="0 0 180">
+                        obj-model="obj: #hand-obj; mtl: #hand-mtl;" position="0, .12, -.06" scale=".045 .045 .045" rotation="-4 2 -184">
                         </a-entity>
       </a-entity>
 
       <a-entity id="bar-object"
-                        obj-model="obj: #bar-obj; mtl: #bar-mtl" position="-2.3 1 -1.5" scale="1 1 1" rotation="-90 0 0"></a-entity>  
+                        obj-model="obj: #bar-obj; mtl: #bar-mtl" position="-2.3 .85 -1.0" scale="1 1 1" rotation="-90 0 0"></a-entity>  
 
       <a-entity id="obj-object"
-                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-1 .7 -.95" scale="1 1 1" rotation="90 0 0">          
       </a-entity>  
 
       <a-entity id="obj-object"
-                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-1.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="-0 .7 -.85" scale="1 1 1" rotation="90 0 0">          
       </a-entity>  
 
             <a-entity id="obj-object"
-                obj-model="obj: #chair-obj; mtl: #chair-mtl" position=".5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="1 .7 -.95" scale="1 1 1" rotation="90 0 0">          
       </a-entity>  
 
-            <a-entity id="obj-object"
-                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="1.5 .76 -1.6" scale="1 1 1" rotation="90 0 0">          
-      </a-entity>  
+            <!--a-entity id="obj-object"
+                obj-model="obj: #chair-obj; mtl: #chair-mtl" position="1.5 .76 -.95" scale="1 1 1" rotation="90 0 0">          
+      </a-entity-->  
 
       <a-entity scale="1 1 1"
-                position="0 .1 -2.20"
+                position="-.8 0 -1.55"
                 rotation="0 0 0"
                 animation-mixer
                 json-model="src: #bartender">
@@ -82,7 +82,7 @@
         <a-entity id="sky"
                   geometry="primitive: sphere; radius: 65;"
                   material="shader: skyGradient; colorTop: #d8e7ff; colorBottom: #ffedd8; side: back"></a-entity>
-         <a-entity ground></a-entity>
+         <a-entity ground position="0 0 0"></a-entity>
 
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 -18"></a-entity>

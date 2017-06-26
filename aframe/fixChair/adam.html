@@ -29,10 +29,9 @@
   
       <a-entity vive-controls="hand: right" id="obj-ctrl" position="0 0 0">
 
-            <a-entity hand-controls="left" position="0 0 0" scale="1 1 1"></a-entity>
 
             <a-entity id="obj-set"
-                        obj-model="obj: #office-obj; mtl: #office-mtl" position=".25 -.7 0" scale="1 1 1" rotation="-90 0 0">
+                        obj-model="obj: #office-obj; mtl: #office-mtl" position=".25 -.7 0" scale="1 1 1" rotation="-90 180 0">
                           
                <a-entity id="obj-set-adam"
                         obj-model="obj: #adam-obj; mtl: #adam-mtl" position="0 -.1 .75" scale="1 1 1" rotation="67 0 0">
@@ -61,7 +60,7 @@
 
         <script language="javascript">
 
-      var _objModel = document.querySelector('#obj-ctrl'); 
+      var _objModel = document.querySelector('#obj-set'); 
       window.addEventListener("keypress", moveObject);
         
       function moveObject(event) {
